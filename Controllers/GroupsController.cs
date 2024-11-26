@@ -24,8 +24,8 @@ public class GroupController : Controller
         return View(groups);
     }
 
-    [HttpPost]
-    [Authorize]
+    //[HttpPost]
+    //[Authorize]
     public IActionResult Create(Group group)
     {
         group.CreatorId = User.Identity.Name; // Assuming username is the user ID
@@ -34,14 +34,17 @@ public class GroupController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpPost]
-    [Authorize]
+    //[HttpPost]
+    //[Authorize]
     public IActionResult Join(int groupId)
     {
-        var membership = new GroupMembership
+        var membership = new GroupMembership(User.Identity != null ? User.Identity.Name : "none", groupId)
         {
             UserId = User.Identity.Name,
-            GroupId = groupId
+            //User=new User(),
+            User = _context.Users.Where(u => u.Id == User.Identity.Name).DefaultIfEmpty(new Черга.Models.User()).First(),
+            GroupId = groupId,
+            Group = _context.Groups.Single()
         };
         _context.GroupMemberships.Add(membership);
         _context.SaveChanges();

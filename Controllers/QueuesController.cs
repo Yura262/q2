@@ -17,7 +17,7 @@ public class QueueController : Controller
     {
         _context = context;
     }
-    [Authorize]
+    //[Authorize]
     public IActionResult Details(int id)
     {
         var queue = _context.Queues
@@ -27,44 +27,45 @@ public class QueueController : Controller
         return View(queue);
     }
 
-    [HttpPost]
-    [Authorize]
-    public IActionResult Create(Queue queue)
+    //[HttpPost]
+    //[Authorize]
+    public IActionResult Create(/*Queue queue*/)
     {
-        ViewBag.CreatorId = _context.Groups.Where(gm => gm.Id == queue.GroupId).Select(gm => gm.CreatorId);
-        // Check if the queue type is Random
-        if (queue.Type == QueueType.Random)
-        {
-            // Get all users in the group
-            var groupMembers = _context.GroupMemberships
-                .Where(gm => gm.GroupId == queue.GroupId)
-                .Select(gm => gm.User)
-                .ToList();
+        //ViewBag.CreatorId = _context.Groups.Where(gm => gm.Id == queue.GroupId).Select(gm => gm.CreatorId);
+        //// Check if the queue type is Random
+        //if (queue.Type == QueueType.Random)
+        //{
+        //    // Get all users in the group
+        //    var groupMembers = _context.GroupMemberships
+        //        .Where(gm => gm.GroupId == queue.GroupId)
+        //        .Select(gm => gm.User)
+        //        .ToList();
 
-            // Shuffle the members
-            var random = new Random();
-            var shuffledMembers = groupMembers.OrderBy(x => random.Next()).ToList();
+        //    // Shuffle the members
+        //    var random = new Random();
+        //    var shuffledMembers = groupMembers.OrderBy(x => random.Next()).ToList();
 
-            // Add the queue
-            queue.Entries = shuffledMembers.Select(member => new QueueEntry
-            {
-                UserId = member.Id,
-                JoinDateTime = DateTime.UtcNow
-            }).ToList();
+        //    // Add the queue
+        //    queue.Entries = shuffledMembers.Select(member => new QueueEntry
+        //    {
+        //        UserId = member.Id,
+        //        JoinDateTime = DateTime.UtcNow
+        //    }).ToList();
 
-            _context.Queues.Add(queue);
-            _context.SaveChanges();
-        }
-        else
-        {
-            // Handle other queue types
-            _context.Queues.Add(queue);
-            _context.SaveChanges();
-        }
+        //    _context.Queues.Add(queue);
+        //    _context.SaveChanges();
+        //}
+        //else
+        //{
+        //    // Handle other queue types
+        //    _context.Queues.Add(queue);
+        //    _context.SaveChanges();
+        //}
 
-        return RedirectToAction("Details", new { id = queue.Id });
+        //return RedirectToAction("Details", new { id = queue.Id });
+        return View();
     }
-    [Authorize]
+    //[Authorize]
     public IActionResult Index()
     {
         var queues = _context.Queues
@@ -72,8 +73,8 @@ public class QueueController : Controller
             .ToList();
         return View(queues);
     }
-    [HttpPost]
-    [Authorize]
+    //[HttpPost]
+    //[Authorize]
     public IActionResult Join(int queueId)
     {
         var entry = new QueueEntry
@@ -86,7 +87,7 @@ public class QueueController : Controller
         _context.SaveChanges();
         return RedirectToAction("Details", new { id = queueId });
     }
-    [Authorize]
+    //[Authorize]
     public IActionResult ShuffleQueue(int queueId)
     {
         var queue = _context.Queues.Include(q => q.Entries).FirstOrDefault(q => q.Id == queueId);

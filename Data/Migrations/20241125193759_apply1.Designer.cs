@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Черга.Data;
 
@@ -11,9 +12,11 @@ using Черга.Data;
 namespace Черга.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125193759_apply1")]
+    partial class apply1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,7 +247,7 @@ namespace Черга.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("Черга.Models.GroupMembership", b =>
@@ -268,7 +271,7 @@ namespace Черга.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupMemberships", (string)null);
+                    b.ToTable("GroupMemberships");
                 });
 
             modelBuilder.Entity("Черга.Models.Queue", b =>
@@ -296,7 +299,7 @@ namespace Черга.Data.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Queues", (string)null);
+                    b.ToTable("Queues");
                 });
 
             modelBuilder.Entity("Черга.Models.QueueEntry", b =>
@@ -323,7 +326,7 @@ namespace Черга.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("QueueEntries", (string)null);
+                    b.ToTable("QueueEntries");
                 });
 
             modelBuilder.Entity("Черга.Models.User", b =>
@@ -341,7 +344,7 @@ namespace Черга.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
