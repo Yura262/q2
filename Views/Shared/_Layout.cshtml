@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Черга.styles.css" asp-append-version="true" />
 </head>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -22,17 +24,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li> *@
+                        
+                        @if (true@* SignInManager.IsSignedIn(User)  User.Identity.IsAuthenticated *@){
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Queue" asp-action="Index">Черги</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Queue" asp-action="Index">Поточні черги</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="Index">Групи</a>
                         </li>
+                        }
+
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <partial name="_LoginPartial.cshtml" />
                 </div>
             </div>
         </nav>

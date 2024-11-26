@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Мої черги</h1>
 
 <p>
     @* @if (User.Identity.Name == ViewBag.CreatorId)
@@ -12,28 +12,28 @@
         <a asp-action="Create" >Create Queue</a>
     } *@
     
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Створити нову</a>
 </p>
 <table class="table">
     <thead>
         <tr>@*columns*@
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Назва
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnabledDate)
+                Час початку пари
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                Тип визначення порядку
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Group)
+                Група
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.OrderBy(i=>i.EnabledDate)) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -45,12 +45,12 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Group.Id)
+                @Html.DisplayFor(modelItem => item.Group.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.Id"><b>Переглянути</b></a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                @* <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
             </td>
         </tr>
 }

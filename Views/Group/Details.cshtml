@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Model.Name</h1>
 
 <div>
     <h4>Group</h4>
@@ -20,11 +20,32 @@
             @Html.DisplayNameFor(model => model.Creator)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Creator.Id)
+            @Html.DisplayFor(model => model.Creator.UserName)
         </dd>
     </dl>
+    <h2>Учасники</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Ім'я</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var (index, member) in Model.Members.Select((item, index) => (index+1, item)))
+            {
+                <tr>
+                    <td>@index</td>
+                    <td>@member.User.FirstName @member.User.LastName</td>
+                    @* <td>@member.User.LastName</td> *@
+                    @* <td>@member.Email</td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">Повернутися до списку</a>
 </div>
+

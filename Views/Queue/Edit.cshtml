@@ -10,13 +10,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="EnabledDate" class="control-label"></label>
@@ -25,23 +24,38 @@
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control"></select>
+                <select asp-for="Type" class="form-control" asp-items="@Html.GetEnumSelectList<QueueType>()" 
+                disabled="@(Model.Type==QueueType.Random)"></select>
+                @* @if (Model.Type == QueueType.Random)
+                {
+                    < a >Чергу з випадкови</ a >
+                } *@
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            @* <div>
+                <label for="Type">Queue Type:</label>
+                <select name="Type" required>
+                    <option value="OrderedByJoinDate">Ordered By Join Date</option>
+                    <option value="Random">Random</option>
+                </select>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="GroupId" class="control-label"></label>
+                <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.GroupId"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GroupId" class="control-label"></label>
-                <select asp-for="GroupId" class="form-control" asp-items="ViewBag.GroupId"></select>
-                <span asp-validation-for="GroupId" class="text-danger"></span>
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Видалити чергу" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Повернутися до списку</a>
 </div>
 
 @section Scripts {

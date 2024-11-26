@@ -6,9 +6,9 @@ using Черга.Models;
 
 namespace Черга.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>//, DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>//, DbContext
     {
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupMembership> GroupMemberships { get; set; }
         public DbSet<Queue> Queues { get; set; }
