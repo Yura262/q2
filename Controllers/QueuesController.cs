@@ -135,7 +135,7 @@ public class QueueController : Controller
         }
         return RedirectToAction("Details", new { id = queueId });
     }
-    public IActionResult Edit(int queueId)
+    public IActionResult Edit(int queueId,Черга.Models.Queue queue)
     {
         ViewBag.GroupId = _context.Groups.Select(x => new SelectListItem
         {
@@ -143,15 +143,15 @@ public class QueueController : Controller
             Text = x.Name.ToString()
 
         });
-        var ques = _context.Queues.FirstOrDefault(x => x.Id == queueId);
+        var ques = _context.Queues.FirstOrDefault(x => x == queue);
         return View(ques);
     }
     [HttpPost]
-    public async Task<IActionResult> Edit([Bind("Name, EnabledDate, Type, GroupId")] Черга.Models.Queue queue)
+    public async Task<IActionResult> Edit([Bind("Id, Name, EnabledDate, Type, GroupId")] Черга.Models.Queue queue)
     {
         //if (ModelState.IsValid)
         //{
-            _context.Update(queue);
+            _context.Queues.Update(queue);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         //}
@@ -169,5 +169,15 @@ public class QueueController : Controller
         var ques = await _context.Queues.FirstOrDefaultAsync(x => x == queue);
         return View(ques);
     }
-
+    [HttpPost,ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(Черга.Models.Queue queue)
+    {
+        //var ques = await _context.Queues.FirstOrDefaultAsync(x => x == queue);
+        if (queue != null)
+        {
+            _context.Queues.Remove(queue);
+            await _context.SaveChangesAsync();
+        }
+        return RedirectToAction("Index");
+    }
 }
